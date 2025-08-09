@@ -1852,7 +1852,8 @@ pub struct ResponseOutputTextAnnotationAddedEvent {
     pub annotation: Value,
     pub annotation_index: u64,
     pub content_index: u64,
-    pub item__id: String,
+    #[serde(rename = "item__id")]
+    pub item_id: String,
     pub output_index: u64,
     pub sequence_number: u64,
 }
