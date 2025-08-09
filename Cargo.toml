@@ -1,5 +1,5 @@
 [package]
-name = "openai-responses"
+name = "sh-openai-responses"
 version = "0.0.1"
 edition = "2024"
 description = "Sunny Health utility for working with Openai responses"
