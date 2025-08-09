@@ -2,10 +2,9 @@
 
 use sh_openai_responses::client::{Client, create_response, create_response_stream};
 use sh_openai_responses::models;
-use sh_openai_responses::models::responses::{ResponseCreateParams, ResponseInput, ResponseInputItem, ResponseInputItemMessage, ResponseInputText, ResponseStreamEvent, ToolChoice, ToolChoiceOptions, ToolChoiceTypes};
+use sh_openai_responses::models::responses::{ResponseCreateParams, ResponseStreamEvent, ToolChoice, ToolChoiceOptions};
 use dotenvy::dotenv;
 use std::env;
-use std::fs;
 use std::error::Error as StdError;
 use futures_util::StreamExt;
 
@@ -140,8 +139,8 @@ async fn test_create_streaming_response() {
     assert!(chunk_count > 0, "Stream did not return any chunks.");
     assert!(!full_content.is_empty(), "Stream did not produce any content.");
 
-    println!("✅ Streaming Response OK. Received {} chunks.", chunk_count);
-    println!("Final assembled content:\n{}", full_content);
+    println!("✅ Streaming Response OK. Received {chunk_count} chunks.");
+    println!("Final assembled content:\n{full_content}");
 }
 
 #[tokio::test]
@@ -254,7 +253,7 @@ async fn test_create_tools_response() {
                             println!("Output {}: Function call: {}", i, func.name);
                         }
                         _ => {
-                            println!("Output {}: Other type", i);
+                            println!("Output {i}: Other type");
                         }
                     }
                 }
@@ -263,25 +262,25 @@ async fn test_create_tools_response() {
             println!("✅ Tools response test completed successfully");
         }
         Err(e) => {
-            println!("❌ API call failed with error: {:#?}", e);
+            println!("❌ API call failed with error: {e:#?}");
             
                          // Try to extract more information about the error
              match &e {
                  sh_openai_responses::client::Error::Reqwest(reqwest_err) => {
                      println!("Reqwest error details:");
                      println!("  Is decode error: {:?}", reqwest_err.is_decode());
-                     println!("  Error: {}", reqwest_err);
+                     println!("  Error: {reqwest_err}");
                      
                      if let Some(source) = reqwest_err.source() {
-                         println!("  Source: {}", source);
+                         println!("  Source: {source}");
                      }
                  }
                  _ => {
-                     println!("Other error type: {:#?}", e);
+                     println!("Other error type: {e:#?}");
                  }
              }
             
-            panic!("API call failed: {:?}", e);
+            panic!("API call failed: {e:?}");
         }
     }
 }

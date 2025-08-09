@@ -258,7 +258,7 @@ async fn execute_request<T: DeserializeOwned>(rb: RequestBuilder) -> Result<T> {
             Ok(json_body) => Ok(json_body),
             Err(err) => {
                 eprintln!("[serde_path_to_error] Deserialization error at path: {}", err.path());
-                eprintln!("[serde_path_to_error] Error: {}", err);
+                eprintln!("[serde_path_to_error] Error: {err}");
                 Err(Error::Serde(err.into_inner()))
             }
         }
@@ -312,7 +312,7 @@ async fn execute_stream(
                     }
 
                     // Debug: Print the raw JSON being received
-                    println!("🔍 Raw JSON received from stream: {}", data_buf);
+                    println!("🔍 Raw JSON received from stream: {data_buf}");
 
                     let mut deserializer = serde_json::Deserializer::from_str(&data_buf);
                     let event_result = serde_path_to_error::deserialize::<_, models::responses::ResponseStreamEvent>(&mut deserializer);
@@ -320,7 +320,7 @@ async fn execute_stream(
                         Ok(event) => return Ok(Some((event, (stream, buffer)))),
                         Err(err) => {
                             eprintln!("[serde_path_to_error] Stream deserialization error at path: {}", err.path());
-                            eprintln!("[serde_path_to_error] Error: {}", err);
+                            eprintln!("[serde_path_to_error] Error: {err}");
                             return Err(Error::Serde(err.into_inner()));
                         }
                     }
