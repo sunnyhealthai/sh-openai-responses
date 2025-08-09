@@ -1,8 +1,8 @@
 // tests/client_integration_test.rs
 
-use openai_responses::client::{Client, create_response, create_response_stream};
-use openai_responses::models;
-use openai_responses::models::responses::{ResponseCreateParams, ResponseInput, ResponseInputItem, ResponseInputItemMessage, ResponseInputText, ResponseStreamEvent, ToolChoice, ToolChoiceOptions, ToolChoiceTypes};
+use sh_openai_responses::client::{Client, create_response, create_response_stream};
+use sh_openai_responses::models;
+use sh_openai_responses::models::responses::{ResponseCreateParams, ResponseInput, ResponseInputItem, ResponseInputItemMessage, ResponseInputText, ResponseStreamEvent, ToolChoice, ToolChoiceOptions, ToolChoiceTypes};
 use dotenvy::dotenv;
 use std::env;
 use std::fs;
@@ -267,7 +267,7 @@ async fn test_create_tools_response() {
             
                          // Try to extract more information about the error
              match &e {
-                 openai_responses::client::Error::Reqwest(reqwest_err) => {
+                 sh_openai_responses::client::Error::Reqwest(reqwest_err) => {
                      println!("Reqwest error details:");
                      println!("  Is decode error: {:?}", reqwest_err.is_decode());
                      println!("  Error: {}", reqwest_err);
