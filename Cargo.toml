@@ -1,0 +1,15 @@
+[package]
+name = "openai-responses"
+version = "0.0.1"
+edition = "2024"
+
+[dependencies]
+serde = { version = "1.0.219", features = ["derive"] }
+serde_json = { version = "1.0.142" }
+reqwest = { version = "0.12.22", default-features = false, features = ["json", "stream", "rustls-tls"] }
+futures-util = "0.3.31"
+serde_path_to_error = "0.1.17"
+
+[dev-dependencies]
+dotenvy = "0.15"
+tokio = { version = "1.39", features = ["full"] }
